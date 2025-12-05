@@ -14,7 +14,8 @@ public class EchoServer
 {
     private readonly int _port;
     private TcpListener _listener;
-    private CancellationTokenSource _cancellationTokenSource;
+   private readonly CancellationTokenSource _cancellationTokenSource;
+
 
 
     public EchoServer(int port)
@@ -48,7 +49,8 @@ public class EchoServer
         Console.WriteLine("Server shutdown.");
     }
 
-    private async Task HandleClientAsync(TcpClient client, CancellationToken token)
+   private static async Task HandleClientAsync(TcpClient client)
+
     {
         using (NetworkStream stream = client.GetStream())
         {
@@ -166,9 +168,10 @@ public class UdpTimedSender : IDisposable
         _timer = null;
     }
 
-    public void Dispose()
-    {
-        StopSending();
-        _udpClient.Dispose();
-    }
+  public void Dispose()
+{
+    _listener?.Stop();
+    _cancellationTokenSource?.Dispose();
+}
+
 }
