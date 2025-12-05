@@ -5,24 +5,22 @@ on:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
+  workflow_dispatch:
 
 permissions:
   contents: read
   pull-requests: read
 
 jobs:
-  sonarcloud:
-    name: SonarCloud
+  sonar:
     runs-on: windows-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v4
+      - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.0.x'
 
@@ -38,8 +36,7 @@ jobs:
             /k:"olekca160406_NetSdrClient" `
             /o:"olekca160406" `
             /d:sonar.token="${{ secrets.SONAR_TOKEN }}" `
-            /d:sonar.cs.opencover.reportsPaths="**/coverage.xml" `
-            /d:sonar.exclusions=**/bin/**,**/obj/**
+            /d:sonar.cs.opencover.reportsPaths="**/coverage.xml"
         shell: pwsh
 
       - name: Restore
