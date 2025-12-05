@@ -1,5 +1,4 @@
-namespace NetSdrClientApp.EchoServer;
-using System;
+﻿using System;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -14,8 +13,7 @@ public class EchoServer
 {
     private readonly int _port;
     private TcpListener _listener;
-   private readonly CancellationTokenSource _cancellationTokenSource;
-
+    private CancellationTokenSource _cancellationTokenSource;
 
 
     public EchoServer(int port)
@@ -49,8 +47,7 @@ public class EchoServer
         Console.WriteLine("Server shutdown.");
     }
 
-   private static async Task HandleClientAsync(TcpClient client)
-
+    private async Task HandleClientAsync(TcpClient client, CancellationToken token)
     {
         using (NetworkStream stream = client.GetStream())
         {
@@ -168,10 +165,9 @@ public class UdpTimedSender : IDisposable
         _timer = null;
     }
 
-  public void Dispose()
-{
-    _listener?.Stop();
-    _cancellationTokenSource?.Dispose();
-}
-
+    public void Dispose()
+    {
+        StopSending();
+        _udpClient.Dispose();
+    }
 }
