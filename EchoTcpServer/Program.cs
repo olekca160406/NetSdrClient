@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 /// This program was designed for test purposes only
 /// Not for a review
 /// </summary>
-namespace NetSdrClientApp.EchoServer
+namespace NetSdrClientApp.EchoServer;
 public class EchoServer
 {
     private readonly int _port;
