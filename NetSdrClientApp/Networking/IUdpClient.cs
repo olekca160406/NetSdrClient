@@ -1,3 +1,4 @@
+using NetSdrClientApp.Networking;
 ﻿
 public interface IUdpClient
 {
